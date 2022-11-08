@@ -16,6 +16,7 @@
  */
 package org.apache.activemq.artemis.core.config;
 
+import org.apache.activemq.artemis.api.config.BrokerProperty;
 import org.apache.activemq.artemis.json.JsonArray;
 import org.apache.activemq.artemis.json.JsonArrayBuilder;
 import org.apache.activemq.artemis.json.JsonObject;
@@ -266,6 +267,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param name the name to set
     */
+   @BrokerProperty
    public BridgeConfiguration setName(final String name) {
       this.name = name;
       return this;
@@ -287,6 +289,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param queueName the queueName to set
     */
+   @BrokerProperty
    public BridgeConfiguration setQueueName(final String queueName) {
       this.queueName = queueName;
       return this;
@@ -299,6 +302,7 @@ public final class BridgeConfiguration implements Serializable {
       return connectionTTL;
    }
 
+   @BrokerProperty(xmlName = "connection-ttl")
    public BridgeConfiguration setConnectionTTL(long connectionTTL) {
       this.connectionTTL = connectionTTL;
       return this;
@@ -311,6 +315,7 @@ public final class BridgeConfiguration implements Serializable {
       return maxRetryInterval;
    }
 
+   @BrokerProperty
    public BridgeConfiguration setMaxRetryInterval(long maxRetryInterval) {
       this.maxRetryInterval = maxRetryInterval;
       return this;
@@ -323,6 +328,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param forwardingAddress the forwardingAddress to set
     */
+   @BrokerProperty
    public BridgeConfiguration setForwardingAddress(final String forwardingAddress) {
       this.forwardingAddress = forwardingAddress;
       return this;
@@ -335,6 +341,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param filterString the filterString to set
     */
+   @BrokerProperty
    public BridgeConfiguration setFilterString(final String filterString) {
       this.filterString = filterString;
       return this;
@@ -347,6 +354,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param transformerConfiguration the transformerConfiguration to set
     */
+   @BrokerProperty(type = BrokerProperty.OBJECT)
    public BridgeConfiguration setTransformerConfiguration(final TransformerConfiguration transformerConfiguration) {
       this.transformerConfiguration = transformerConfiguration;
       return this;
@@ -359,6 +367,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param staticConnectors the staticConnectors to set
     */
+   @BrokerProperty
    public BridgeConfiguration setStaticConnectors(final List<String> staticConnectors) {
       this.staticConnectors = staticConnectors;
       return this;
@@ -371,6 +380,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param discoveryGroupName the discoveryGroupName to set
     */
+   @BrokerProperty(xmlName = "discovery-group-ref")
    public BridgeConfiguration setDiscoveryGroupName(final String discoveryGroupName) {
       this.discoveryGroupName = discoveryGroupName;
       return this;
@@ -383,6 +393,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param ha is the bridge supporting HA?
     */
+   @BrokerProperty(propertyName = "ha", xmlName = "ha")
    public BridgeConfiguration setHA(final boolean ha) {
       this.ha = ha;
       return this;
@@ -395,6 +406,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param retryInterval the retryInterval to set
     */
+   @BrokerProperty
    public BridgeConfiguration setRetryInterval(final long retryInterval) {
       this.retryInterval = retryInterval;
       return this;
@@ -407,6 +419,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param retryIntervalMultiplier the retryIntervalMultiplier to set
     */
+   @BrokerProperty
    public BridgeConfiguration setRetryIntervalMultiplier(final double retryIntervalMultiplier) {
       this.retryIntervalMultiplier = retryIntervalMultiplier;
       return this;
@@ -419,6 +432,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param initialConnectAttempts the initialConnectAttempts to set
     */
+   @BrokerProperty
    public BridgeConfiguration setInitialConnectAttempts(final int initialConnectAttempts) {
       this.initialConnectAttempts = initialConnectAttempts;
       return this;
@@ -443,6 +457,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param useDuplicateDetection the useDuplicateDetection to set
     */
+   @BrokerProperty
    public BridgeConfiguration setUseDuplicateDetection(final boolean useDuplicateDetection) {
       this.useDuplicateDetection = useDuplicateDetection;
       return this;
@@ -455,6 +470,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param confirmationWindowSize the confirmationWindowSize to set
     */
+   @BrokerProperty
    public BridgeConfiguration setConfirmationWindowSize(final int confirmationWindowSize) {
       this.confirmationWindowSize = confirmationWindowSize;
       return this;
@@ -467,6 +483,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param producerWindowSize the producerWindowSize to set
     */
+   @BrokerProperty
    public BridgeConfiguration setProducerWindowSize(final int producerWindowSize) {
       this.producerWindowSize = producerWindowSize;
       return this;
@@ -476,6 +493,7 @@ public final class BridgeConfiguration implements Serializable {
       return clientFailureCheckPeriod;
    }
 
+   @BrokerProperty(xmlName = "check-period")
    public BridgeConfiguration setClientFailureCheckPeriod(long clientFailureCheckPeriod) {
       this.clientFailureCheckPeriod = clientFailureCheckPeriod;
       return this;
@@ -488,6 +506,7 @@ public final class BridgeConfiguration implements Serializable {
       return minLargeMessageSize;
    }
 
+   @BrokerProperty
    public BridgeConfiguration setMinLargeMessageSize(int minLargeMessageSize) {
       this.minLargeMessageSize = minLargeMessageSize;
       return this;
@@ -497,6 +516,7 @@ public final class BridgeConfiguration implements Serializable {
       return user;
    }
 
+   @BrokerProperty
    public BridgeConfiguration setUser(String user) {
       this.user = user;
       return this;
@@ -506,6 +526,7 @@ public final class BridgeConfiguration implements Serializable {
       return password;
    }
 
+   @BrokerProperty
    public BridgeConfiguration setPassword(String password) {
       this.password = password;
       return this;
@@ -522,6 +543,7 @@ public final class BridgeConfiguration implements Serializable {
       return reconnectAttemptsOnSameNode;
    }
 
+   @BrokerProperty
    public BridgeConfiguration setReconnectAttemptsOnSameNode(int reconnectAttemptsOnSameNode) {
       this.reconnectAttemptsOnSameNode = reconnectAttemptsOnSameNode;
       return this;
@@ -531,6 +553,7 @@ public final class BridgeConfiguration implements Serializable {
       return routingType;
    }
 
+   @BrokerProperty
    public BridgeConfiguration setRoutingType(ComponentConfigurationRoutingType routingType) {
       this.routingType = routingType;
       return this;
@@ -546,6 +569,7 @@ public final class BridgeConfiguration implements Serializable {
    /**
     * @param concurrency the bridge concurrency to set
     */
+   @BrokerProperty
    public BridgeConfiguration setConcurrency(int concurrency) {
       this.concurrency = concurrency;
       return this;

@@ -17,6 +17,8 @@
 
 package org.apache.activemq.artemis.core.config.routing;
 
+import org.apache.activemq.artemis.api.config.BrokerProperty;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -43,6 +45,7 @@ public class PoolConfiguration implements Serializable {
       return username;
    }
 
+   @BrokerProperty
    public PoolConfiguration setUsername(String username) {
       this.username = username;
       return this;
@@ -52,6 +55,7 @@ public class PoolConfiguration implements Serializable {
       return password;
    }
 
+   @BrokerProperty
    public PoolConfiguration setPassword(String password) {
       this.password = password;
       return this;
@@ -61,6 +65,7 @@ public class PoolConfiguration implements Serializable {
       return checkPeriod;
    }
 
+   @BrokerProperty
    public PoolConfiguration setCheckPeriod(int checkPeriod) {
       this.checkPeriod = checkPeriod;
       return this;
@@ -70,6 +75,7 @@ public class PoolConfiguration implements Serializable {
       return quorumSize;
    }
 
+   @BrokerProperty
    public PoolConfiguration setQuorumSize(int quorumSize) {
       this.quorumSize = quorumSize;
       return this;
@@ -79,6 +85,7 @@ public class PoolConfiguration implements Serializable {
       return quorumTimeout;
    }
 
+   @BrokerProperty
    public PoolConfiguration setQuorumTimeout(int quorumTimeout) {
       this.quorumTimeout = quorumTimeout;
       return this;
@@ -88,6 +95,7 @@ public class PoolConfiguration implements Serializable {
       return localTargetEnabled;
    }
 
+   @BrokerProperty
    public PoolConfiguration setLocalTargetEnabled(boolean localTargetEnabled) {
       this.localTargetEnabled = localTargetEnabled;
       return this;
@@ -97,6 +105,7 @@ public class PoolConfiguration implements Serializable {
       return clusterConnection;
    }
 
+   @BrokerProperty
    public PoolConfiguration setClusterConnection(String clusterConnection) {
       this.clusterConnection = clusterConnection;
       return this;
@@ -106,6 +115,7 @@ public class PoolConfiguration implements Serializable {
       return staticConnectors;
    }
 
+   @BrokerProperty
    public PoolConfiguration setStaticConnectors(List<String> staticConnectors) {
       this.staticConnectors = staticConnectors;
       return this;
@@ -115,6 +125,7 @@ public class PoolConfiguration implements Serializable {
       return discoveryGroupName;
    }
 
+   @BrokerProperty
    public PoolConfiguration setDiscoveryGroupName(String discoveryGroupName) {
       this.discoveryGroupName = discoveryGroupName;
       return this;

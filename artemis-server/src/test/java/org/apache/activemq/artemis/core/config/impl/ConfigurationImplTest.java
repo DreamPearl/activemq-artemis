@@ -25,6 +25,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
@@ -39,6 +40,7 @@ import org.apache.activemq.artemis.ArtemisConstants;
 import org.apache.activemq.artemis.api.config.ActiveMQDefaultConfiguration;
 import org.apache.activemq.artemis.api.core.SimpleString;
 import org.apache.activemq.artemis.api.core.TransportConfiguration;
+import org.apache.activemq.artemis.core.config.ClusterConnectionConfiguration;
 import org.apache.activemq.artemis.core.config.Configuration;
 import org.apache.activemq.artemis.core.config.ConfigurationUtils;
 import org.apache.activemq.artemis.core.config.amqpBrokerConnectivity.AMQPBrokerConnectConfiguration;
@@ -713,7 +715,6 @@ public class ConfigurationImplTest extends ActiveMQTestBase {
       insertionOrderedProperties.put("AMQPConnections.target.user", "admin");
       insertionOrderedProperties.put("AMQPConnections.target.password", "password");
       insertionOrderedProperties.put("AMQPConnections.target.autoStart", "true");
-      insertionOrderedProperties.put("AMQPConnections.target.connectionElements.mirror.type", "MIRROR");
       insertionOrderedProperties.put("AMQPConnections.target.connectionElements.mirror.messageAcknowledgements", "true");
       insertionOrderedProperties.put("AMQPConnections.target.connectionElements.mirror.queueCreation", "true");
       insertionOrderedProperties.put("AMQPConnections.target.connectionElements.mirror.queueRemoval", "true");
@@ -729,7 +730,7 @@ public class ConfigurationImplTest extends ActiveMQTestBase {
       Assert.assertEquals(-2, connectConfiguration.getReconnectAttempts());
       Assert.assertEquals("admin", connectConfiguration.getUser());
       Assert.assertEquals("password", connectConfiguration.getPassword());
-      Assert.assertEquals(1,connectConfiguration.getConnectionElements().size());
+      Assert.assertEquals(4,connectConfiguration.getConnectionElements().size());
       AMQPBrokerConnectionElement amqpBrokerConnectionElement = connectConfiguration.getConnectionElements().get(0);
       Assert.assertTrue(amqpBrokerConnectionElement instanceof AMQPMirrorBrokerConnectionElement);
       AMQPMirrorBrokerConnectionElement amqpMirrorBrokerConnectionElement = (AMQPMirrorBrokerConnectionElement) amqpBrokerConnectionElement;
@@ -1163,6 +1164,65 @@ public class ConfigurationImplTest extends ActiveMQTestBase {
    }
 
    @Test
+   public void testClusterConnectionViaProperties() throws Exception {
+      ConfigurationImpl configuration = new ConfigurationImpl();
+      Properties properties = new Properties();
+      properties.put("clusterConfigurations.cc.retryIntervalMultiplier", "1");
+      properties.put("clusterConfigurations.cc.maxRetryInterval", "2");
+      properties.put("clusterConfigurations.cc.address", "address");
+      properties.put("clusterConfigurations.cc.maxHops", "4");
+      properties.put("clusterConfigurations.cc.clusterNotificationInterval", "5");
+      properties.put("clusterConfigurations.cc.connectionTTL", "6");
+      properties.put("clusterConfigurations.cc.confirmationWindowSize", "7");
+      properties.put("clusterConfigurations.cc.callTimeout", "8");
+      properties.put("clusterConfigurations.cc.clusterNotificationAttempts", "9");
+      properties.put("clusterConfigurations.cc.allowDirectConnectionsOnly", "true");
+      properties.put("clusterConfigurations.cc.duplicateDetection", "false");
+      properties.put("clusterConfigurations.cc.reconnectAttempts", "1");
+      properties.put("clusterConfigurations.cc.callFailoverTimeout", "2");
+      properties.put("clusterConfigurations.cc.connectorName", "foo");
+      properties.put("clusterConfigurations.cc.initialConnectAttempts", "3");
+      properties.put("clusterConfigurations.cc.retryInterval", "4");
+      properties.put("clusterConfigurations.cc.producerWindowSize", "5");
+      properties.put("clusterConfigurations.cc.clientFailureCheckPeriod", "6");
+      properties.put("clusterConfigurations.cc.discoveryGroupName", "bar");
+      properties.put("clusterConfigurations.cc.minLargeMessageSize", "7");
+      properties.put("clusterConfigurations.cc.messageLoadBalancingType", "STRICT");
+      properties.put("clusterConfigurations.cc.staticConnectors", "a,b,c");
+
+      configuration.parsePrefixedProperties(properties, null);
+
+      ClusterConnectionConfiguration ccc = configuration.getClusterConfigurations().get(0);
+      Assert.assertEquals("cc", ccc.getName());
+      Assert.assertEquals(1d, ccc.getRetryIntervalMultiplier(), 0);
+      Assert.assertEquals(2, ccc.getMaxRetryInterval());
+      Assert.assertEquals("address", ccc.getAddress());
+      Assert.assertEquals(4, ccc.getMaxHops());
+      Assert.assertEquals(5, ccc.getClusterNotificationInterval());
+      Assert.assertEquals(6, ccc.getConnectionTTL());
+      Assert.assertEquals(7, ccc.getConfirmationWindowSize());
+      Assert.assertEquals(8, ccc.getCallTimeout());
+      Assert.assertEquals(9, ccc.getClusterNotificationAttempts());
+      Assert.assertEquals(true, ccc.isAllowDirectConnectionsOnly());
+      Assert.assertEquals(false, ccc.isDuplicateDetection());
+      Assert.assertEquals(1, ccc.getReconnectAttempts());
+      Assert.assertEquals(2, ccc.getCallFailoverTimeout());
+      Assert.assertEquals("foo", ccc.getConnectorName());
+      Assert.assertEquals(3, ccc.getInitialConnectAttempts());
+      Assert.assertEquals(4, ccc.getRetryInterval());
+      Assert.assertEquals(5, ccc.getProducerWindowSize());
+      Assert.assertEquals(6, ccc.getClientFailureCheckPeriod());
+      Assert.assertEquals("bar", ccc.getDiscoveryGroupName());
+      Assert.assertEquals(7, ccc.getMinLargeMessageSize());
+      Assert.assertEquals(MessageLoadBalancingType.STRICT, ccc.getMessageLoadBalancingType());
+      List<String> staticConnectors = ccc.getStaticConnectors();
+      Assert.assertEquals(3, staticConnectors.size());
+      Assert.assertEquals("a", staticConnectors.get(0));
+      Assert.assertEquals("b", staticConnectors.get(1));
+      Assert.assertEquals("c", staticConnectors.get(2));
+   }
+
+   @Test
    public void testPropertiesReaderRespectsOrderFromFile() throws Exception {
 
       File tmpFile = File.createTempFile("ordered-props-test", "", temporaryFolder.getRoot());
@@ -1405,5 +1465,4 @@ public class ConfigurationImplTest extends ActiveMQTestBase {
    protected Configuration createConfiguration() throws Exception {
       return new ConfigurationImpl();
    }
-
 }

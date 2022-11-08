@@ -17,6 +17,7 @@
 package org.apache.activemq.artemis.core.config.amqpBrokerConnectivity;
 
 import org.apache.activemq.artemis.api.core.SimpleString;
+import org.apache.activemq.artemis.api.config.BrokerProperty;
 
 public class AMQPMirrorBrokerConnectionElement extends AMQPBrokerConnectionElement {
 
@@ -60,6 +61,7 @@ public class AMQPMirrorBrokerConnectionElement extends AMQPBrokerConnectionEleme
       return queueCreation;
    }
 
+   @BrokerProperty
    public AMQPMirrorBrokerConnectionElement setQueueCreation(boolean queueCreation) {
       this.queueCreation = queueCreation;
       return this;
@@ -69,6 +71,7 @@ public class AMQPMirrorBrokerConnectionElement extends AMQPBrokerConnectionEleme
       return queueRemoval;
    }
 
+   @BrokerProperty
    public AMQPMirrorBrokerConnectionElement setQueueRemoval(boolean queueRemoval) {
       this.queueRemoval = queueRemoval;
       return this;
@@ -84,6 +87,7 @@ public class AMQPMirrorBrokerConnectionElement extends AMQPBrokerConnectionEleme
       return messageAcknowledgements;
    }
 
+   @BrokerProperty
    public AMQPMirrorBrokerConnectionElement setMessageAcknowledgements(boolean messageAcknowledgements) {
       this.messageAcknowledgements = messageAcknowledgements;
       return this;
@@ -93,6 +97,7 @@ public class AMQPMirrorBrokerConnectionElement extends AMQPBrokerConnectionEleme
       return addressFilter;
    }
 
+   @BrokerProperty
    public AMQPMirrorBrokerConnectionElement setAddressFilter(String addressFilter) {
       this.addressFilter = addressFilter;
       return this;

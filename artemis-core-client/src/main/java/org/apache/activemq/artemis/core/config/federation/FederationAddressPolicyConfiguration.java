@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apache.activemq.artemis.api.config.BrokerProperty;
 import org.apache.activemq.artemis.api.core.ActiveMQBuffer;
 import org.apache.activemq.artemis.utils.Preconditions;
 
@@ -55,11 +56,13 @@ public class FederationAddressPolicyConfiguration implements FederationPolicy<Fe
       return excludes;
    }
 
+   @BrokerProperty(type = BrokerProperty.OBJECT, propertyName = "includes.{NAME}.addressMatch", xmlName = "include", xmlType = "addressMatchType")
    public FederationAddressPolicyConfiguration addInclude(Matcher include) {
       includes.add(include);
       return this;
    }
 
+   @BrokerProperty(type = BrokerProperty.OBJECT, propertyName = "excludes.{NAME}.addressMatch", xmlName = "include", xmlType = "addressMatchType")
    public FederationAddressPolicyConfiguration addExclude(Matcher exclude) {
       excludes.add(exclude);
       return this;
@@ -69,6 +72,7 @@ public class FederationAddressPolicyConfiguration implements FederationPolicy<Fe
       return maxHops;
    }
 
+   @BrokerProperty
    public FederationAddressPolicyConfiguration setMaxHops(int maxHops) {
       this.maxHops = maxHops;
       return this;
